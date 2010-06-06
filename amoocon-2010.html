@@ -1,0 +1,301 @@
+<title>Introducing CouchDB, Amoocon, Rostock, Germany, June 5th, 2010</title>
+
+<meta charset="utf-8">
+
+<link rel="stylesheet" href="de.css">
+
+<p>I gave a 25-minute “Introducing CouchDB” talk at 
+<a href="http://amoocon.de/">http://amoocon.de/</a>, Rostock, June 5th, 2010.
+This is how it roughly went.
+
+<p>See my <a href="#present">Slides</a>. Video is pending.
+
+<h2>Jan Lehnardt, <a href="http://twitter.com/janl">@janl</a>, jan@apache.org</h2>
+
+<p>Hello, my name is Jan Lehnardt. I’m open source developer. I’m coming from the
+web and I have no experience with any VoIP stuff. Thanks to Stefan for inviting
+me here.
+
+
+<h2>CouchDB</h2>
+
+<p>I’m working on a project called <a href="http://couchdb.apache.org/">Apache
+CouchDB</a> and I’m here to tell you all about it — at least as a high-level
+overview.
+
+<p>In case you wonder, the name Apache just means that we’re in the same parent
+organisation as <a href="http://httpd.apache.org/">Apache httpd</a> which I’m
+sure all of you know.
+
+
+<h2>NoSQL</h2>
+
+<p>CouchDB is part of a new breed of database systems that all go under the term
+“NoSQL”. I could try and explain what NoSQL means or stands for but that would
+take about forever and instead I give you my subjective interpretation.
+
+<p>NoSQL is about choice. All members of the group (there are 5–20+ depending who
+counts) have a core idea they were developed around. Some are converging some
+many are diverging. It’s the core ideas that are interesting; instead of listing
+them all (there are too many), I go one level up and look at the whole scene.
+
+<p>By being tailored to solving specific problems very well, NoSQL databases give
+users <em>choice</em> of better systems for specific tasks. And the choice bit
+is what I think is most important here. Instead of the one-size-fits-oracle
+mentality, you can build better systems by choosing a data store that suits your
+needs better. — Note that with “specific” I don’t mean “niche”. Some of these
+systems are useful for 80% or 100% of the things people do with databases. It’s
+like with Word; sure it has all these features for pros, but my mom just wants
+to write a letter…
+
+<p>I’ll give you the rundown on what CouchDB is best for.
+
+
+<h2>Scaling</h2>
+
+<p>Before I go into the details though, I dwell on one aspect that a lot of NoSQL
+systems are at least tangentially targeting: Scaling. Scaling is a broad term
+but in databases it almost always means scaling up, growing databases, adding
+hardware to add storage or throughput capacity, being able to store tera- and
+petabytes of data and growing quickly.
+
+
+<h3>Uppers</h3>
+
+<p>Scaling up is a race to specialisation. There is no one way to scale a database
+to your specific needs (again, that’s why there are so many new database systems
+coming up). Yet many of these systems try to be a one-size-fits-all solution
+— remember how we are trying to get away from that? :)
+
+<p>Scaling up is fun though, just add a few machines, double capacity, your
+database cluster grows magically, deals with machine failure automatically.
+Amazing stuff, and hard, geeks love hard problems, I’m sure you do and I’m sure
+given the chance, you’d be interested in learning about all the funky techniques
+people are using.
+
+<p>This all sounds great, the problem though is, very few people need this. Your
+average website isn’t as big as Facebook or Twitter (who do a crazy amount of
+computing). I’d wager that less than 1% of all websites need crazy scaling
+solutions. That’s still a good number, but I’m interested in making more
+people’s lives easier.
+
+<p>That said, CouchDB is fully capable of being set-up in large clusters and afford
+the crazy scale-out. For those who need it, it can be done, and people do. There
+are currently three scale-out systems on top of CouchDB. All tailored to
+specific needs (c.f. one-size-fits-all). One is in production at the BBC, multi-
+data-centre and all. One at Meebo.com and one at Cloudant.com.
+
+
+<h3>Downers</h3>
+
+<p>The trick about CouchDB now is that it also scales down very well. You can run
+it on a small server or vserver to power your website and it’ll work fine and
+with little fuss.
+
+<p>You can even run it on your (smart)phone? No problem, Google Android, Nokia /
+SiemensMaemo/MeeGo, Palm / HP’s WebOS, all in. iPhone and iPad…not so much,
+thanks Apple.
+
+<p>Why is scaling down important?
+
+<p>CouchDB has a unique feature. It has a peer-to-peer synchronisation mechanism
+built-in. It comes with automatic conflict detection, is very robust and is
+dead simple to use. Much like rsync or git, you can give CouchDB two databases,
+local or remote, and CouchDB will figure out what to do to make them equal.
+
+
+<h2>Centralised Past…</h2>
+
+<p>When the web came out, Tim Berners-Lee never envision Facebook, large
+centralised services with a lot of power. He thought everybody would publish his
+or her stuff on a personal web-server where others could read or fetch it from.
+
+<p>He never envision a centralised system like Facebook that enormous power and
+control.
+
+<h2>…Distributed Future</h2>
+
+<p>Because we didn’t have the tech to make that appealing to the mass-market, these
+centralised services started to appear and grow. And control is great, that’s
+what gets VCs to put billions of money into the social networks of the world.
+
+<p>Opera saw that too, a few years ago they launched Opera Unite, a web server in
+your browser. A lot of people thought crazy-talk, but that’s what the web was
+meant to be. I believe, with Jon talking here yesterday even more so, that Opera
+was ahead of the times once again.
+
+<p>Over the last year, Facebook started to mock users with non-transparent changes
+to their privacy system. This spurred the Diaspora project which wants to build
+a decentralised social network, giving users back the power over their data.
+Through a grass-roots donation collection site, they collected over $250,000 in
+just a few weeks.
+
+<p>People are ready for this.
+
+
+<h2>Couchin’ Tech Details</h2>
+
+<p>I’ll give you a few more CouchDB features before putting the big picture
+together for you, be patient :)
+
+
+<h3>JSON Baby</h3>
+
+<p>CouchDB stores everything in JSON, JSON is great! Who here knows JSON <em>raises
+hand? </em>Most of everybody, good. JSON is the subset of all programming
+languages’ data structures. Not the super-set, it doesn’t try to accommodate
+everybody, but it looks at everything that is out there and distills it to a
+concise format.
+
+<p>One of the many advantages is that you can take a Java object, serialise it into
+JSON and deseralise it into Python without any loss or impedance mismatch.
+
+<p>CouchDB doesn’t expect the JSON to be in a specific schema, allowing much more
+natural data storage as in you can “just store data” instead of getting a math
+degree first to figure out SQL.
+
+
+<h3>MappingReducing</h3>
+
+<p>MapReduce is the technique that made Google rich and famous. On top of being
+highly scalable, MapReduce, much like schema-less JSON is easier to understand
+for non-database-geeks, is more flexible and works better at large scale.
+
+<p>The downside is that for database-geeks it might take some time to get, but I
+think it’s a valuable trade-off, as I’m more interested in building simpler
+systems for non-techy people.
+
+
+<h3>Real-Time Changes</h3>
+
+<p>One small, yet neat feature is real-time changes. A client and subscribe to
+changes inside CouchDB. CouchDB will hold open a socket and whenever a change
+happens inside CouchDB, the client will get a notification in real-time. This
+is great for building chat systems, real-time cluster notifications and a lot
+of other nice things.
+
+
+<h3>CouchApps</h3>
+
+<p>The last thing I’ll tell you about before bringing it all together are
+CouchApps. CouchApps use all the things I talked about and a few more: CouchDB
+has a REST/HTML API. You can store HTML inside CouchDB and it gets a URL. When
+you point a browser to that URL, the HTML gets rendered in the browser; just
+like a web server. Easy. 
+
+<p>Now, you can also store JavaScript inside CouchDB as well and reference that in
+the HTML and now you can use AJAX to talk back to CouchDB! You can build fully
+database-backed web applications without any middleware that is Java, Ruby,
+Python or PHP). This is awesome!
+
+<p>“A browser talking directly to the database? — You crazy?!” you might say. —
+Well, I have a t-shirt that says “My Couch Runs on Port 80” <em>turns 
+around.</em>
+
+<!-- TODO: add pic -->
+
+<p>It isn’t crazy — see Opera Unite.
+
+
+<h2>Building <strike>Less Crap </strike>Leaner Systems</h2>
+
+<p>CouchApps allow you to build smaller, leaner, faster systems. Apps that have
+less code, fewer bugs, are easier to understad, operate and maintain. It’s
+awesome.
+
+<p>Now, I’m bringing it all together. The reason why all of the above is important
+and the sole reason why CouchDB is awesome is…
+
+
+<h2>Sync</h2>
+
+<p>Database synchronisation is <em>the</em> killer feature in CouchDB. It is what
+ties everything I talked about together.
+
+
+<h2>Sync!</h2>
+
+<p>CouchDB sync, or <em>replication</em> allows you to synchronise two databases,
+local or remote. It has automatic conflict detection and that allows a fully
+decentralised setup; any database can be a master. It is fully peer-to-peer
+capable.
+
+<p>Syncing data between two machines locally is a piece of cake. In fact, since
+last year, the Ubuntu desktop is shipping with CouchDB for personal data sync.
+They created plugins for Browsers, mail clients, notes and so on to store their
+data, contacts, bookmarks into CouchDB and use it to sync with other machines.
+
+<p>They also have cloud-endpoint called UbuntuOne that allows everybody to create
+an offline back (2GB are free, you pay for more). This is an integrated
+solution fully based on CouchDB. Users are in control of their data and where it
+goes, if they choose to, they don’t have to share it with anyone. CouchDB runs
+both the client computers and the server backend. Scaling up and down is crucial
+to make it all work.
+
+<p>Mozilla is supporting this model with their new messaging client Raindrop. All
+the mobile vendors are interested in this as well, the reason is twofold:
+
+<p>One is latency, or locality of data. If the full application and data is
+on the client and acting independently, the mobile device is a full app platform
+not just a mere cache for stuff that has been downloaded at some point.
+
+<p>Interacting with a local device is always faster than talking to any other
+computer on the network. Localhost is always the fastet node in your network.
+By the laws of physics you can’t add a machine to a network to make it faster.
+You always add latency and latency is bad.
+
+<p>Latency means a user has to wait potentially forever for results of his or her
+actions. Low latency ensures a speedy user interaction. If it takes five minutes
+to send or receive an email doesn’t really matter because it is not an action
+the user has to wait on. This works great in situations with slow or spotty
+network connection, which by the way are not only mobile connections in third-
+world countries (these are surprisingly good compared to western networks) but
+local DSL lines are usually oversubscribed, in peak times, bandwidth is a
+fraction of what has been advertised.
+
+<p>Using the network on a mobile device has another implication, it drains your
+battery. If you use your app locally, you save radio and thus battery power when
+using an app, sync can be delayed to until it is worth powering up the radio or
+when a wifi is available.
+
+<p>We’ve been talking to handset manufacturers, they are pretty interested in what
+CouchDB has to offer here.
+
+<p>Add technical advantage to a simpler development environment appealing to more
+than just technical people and the privacy advantages of decentralised systems,
+CouchDB is a pretty hot piece of technology and I hope you agree.
+
+<h2>Breathe</h2>
+
+<p>White slide, take a breath, mostly I should do that. <em>breathes</em>.
+
+
+<h2>The Book</h2>
+
+<p>I just touched on technical details, of course there is a lot to learn. The 20
+minute format (which I like) just lets me waste enough of your time to
+(hopefully) get you interested. Luckily I wrote a book. It’s O’Reilly’s CouchDB:
+The Definite Guide and it is <a href="http://books.couchdb.org/relax">available
+online</a> under the Creative Commons license. Thanks O’Reilly for allowing us
+to do that. So you can read it online for free but it wouldn’t hurt us if you
+buy a copy, just so O’Reilly knows you appreciate the open sourcing.
+
+
+<h2>Links</h2>
+
+<p>For those of you who download the slides, I’ll leave a few links.
+
+<li><a href="http://couchdb.apache.org/">http://couchdb.apache.org/</a></li>
+<li><a href="http://couch.io/">http://couch.io/</a></li>
+<li><a href="http://books.couchdb.org/">http://books.couchdb.org/</a></li>
+<li><a href="http://planet.couchdb.org/">http://planet.couchdb.org/</a></li>
+<li><a href="http://store.couchdb.org/">http://store.couchdb.org/</a></li>
+
+
+<h2>Thanks</h2>
+
+<p>No time for questions, sorry!
+
+<p>❧
+
+<script src="present.js" type="text/javascript" charset="utf-8"></script>
