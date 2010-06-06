@@ -1,0 +1,12 @@
+body {
+  font-size:14pt;
+  font-family:"Minion Pro";
+  width: 36em;
+  margin:4ex 0 12ex 4em;
+}
+
+em.signature {
+  display:block;
+  text-align:right;
+}
+
