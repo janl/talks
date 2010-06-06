@@ -1,0 +1,3 @@
+[submodule "present.js"]
+	path = present.js
+	url = git://github.com/janl/present.js.git
