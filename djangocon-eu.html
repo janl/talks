@@ -1,0 +1,211 @@
+<title>Djangocon.eu Keynote, Mai 25th, 2010, Berlin</title>
+
+<meta charset="utf-8">
+<link rel="stylesheet" href="de.css">
+
+<h1>Simplicity</h1>
+
+<p>View the <a href="djangocon-eu.pdf">Slides</a> along with the text. <strike>Video is pending.</strike> <a href="http://djangoconeu.blip.tv/file/3680798/">Watch the video.</a>
+
+<p>Good morning all! I’m sorry I missed the party last night.
+
+
+<h2>Jan Lehnardt, CouchDB, Mustache.js</h2>
+
+<p>Great! My name is <a href="http://twitter.com/janl">Jan Lehnardt</a>, you may know me from such movies as <a href="http://couchdb.apache.org/">CouchDB</a> or my lesser supporting role in <a href="http://mustache.github.com/">mustache</a> as <a href="http://github.com/janl/mustache.js">mustache.js</a>.
+
+<p>Let me start by saying: What <a href="http://djangocon.eu/">a great conference!</a> Makes me wish I’d be a <a href="http://djangoproject.org/">Django</a> person. It’s an honour to be here, thanks for the invitation.
+
+
+<h2>Simplicity</h2>
+
+<p>Alright. The title of my talk is “Simplicity” (because it says so on the wall).
+
+
+<h2>…not when there is nothing to add,</h2>
+
+<p>This is a great quote by a great guy I don’t know how to pronounce correctly, I’m sorry.
+
+<blockquote>
+  “A designer knows he has achieved perfection not when there is nothing left to add, but when there is nothing left to take away.”
+  </blockquote>
+
+<em class="signature">— Antoine de Saint-Exupéry</em>
+
+<p>I’m sure all of you have heard this quote over and over again, every second keynote speech mentions it. Well, it is a pretty good quote.</p>
+
+<h2>!</h2>
+
+<p>Right, “designer”, who here is a “designer” (<em>raises hand</em>)? — <em>Crickets</em> — Thought so.
+
+
+<h2>Design is how it Works</h2>
+
+<blockquote>
+  “Design is how it works”
+</blockquote>
+<em class="signature">— Steve Jobs</em>
+
+<p>You’re all designers! You make stuff, you get to decide how that stuff, your stuff, works. That is design. Design an API, design a Model, design a Query. It’s all about it works.
+
+<p>Perfection is achieved when there is nothing to take away. Django even has “Perfectionists” in the tag line. You write for people who want to do the most by removing all the crap that makes something imperfect.
+
+<p>You should care about design as it results in better software that makes you happier that in turn and most importantly makes your users happier. If you write backend code you might not think about “users”. I work on a database, people use it. They are my users and I *have to* think about them. Yesterday, we learned about the term “end developer”; it is spot-on, take this to heart, please.
+
+
+<h2>Layers</h2>
+
+<p>Software is made of <a href="http://www.google.com/images?q=layer+cake+food">layers</a>; inherent layers. Simplicity needs to be applied to every layer here to make software simple:
+
+<ul>
+  <li>Text — The source code of the software we write.</li>
+  <li>Algorithms — The ideas behind the source code, in small pieces.</li>
+  <li>Architecture — How it all fits together.</li>
+  <li>Data — Fluff users want to see.</li>
+  <li>Stack — Where we are in the layer cake, which neighbours do we have to care about?</li>
+  <li>UI — How we want things to look.</li>
+  <li>UX — How people see things.</li>
+</ul>
+
+<p>(not exhaustive, I just made up that list to prove my point :)
+
+
+<h2>Breathe</h2>
+
+<p>Here’s an empty slide for you and me to breathe.
+
+<p>Inhale.
+
+<p>Exhale.
+
+
+<h2>Text</h2>
+
+<p>I like writing source code and I believe you do too. It’s a fun game and it’s the only thing we got to show for as hard work. It is also the key to any software we create. If somebody can read your source code, he can work on your software (for better or worse).
+
+<p>In his research at <a href="http://en.wikipedia.org/wiki/Alan_Kay">Xerox PARC</a> in the seventies, <a href="http://en.wikipedia.org/wiki/Alan_Kay">Alan Kay</a> and his team <a href="http://video.google.com/videoplay?docid=-533537336174204822">discovered</a> that kids have the attention span of one to two pages of code; untrained Adults have five to six. Their research focussed on learning, on teaching, on how to get more people to use computers to help with their lives, their work, how to become a master in something that usually only highly trained individuals are capable of (I wish I had a slide that turns the projections into a mirror). That’s you. Then there is everybody else and they either hate or are afraid of their computer.
+
+<p>Code has a few more properties that you should care about. One is length. While the lines of code as a metric are pretty useless, there are some conclusions to draw that <a href="http://amartester.blogspot.com/2007/04/bugs-per-lines-of-code.html">hold during scientific examination</a>. Regardless of the programming language used, regardless of the techniques used (except in a few cases, e.g. NASA space shuttle code) the number of defects per lines of code is fairly constant. Not an absolute constant, like 7, but a range that is fairly constant. So the rule of thumb is easy: less code == less bugs. Yay.
+
+<p>Except that is not totally true, the number of bugs per lines of code gets worse as the the total number of lines of code increases. The more you don’t write less code the worse it gets. So don’t write that code!
+
+
+<h2>Mustache.js</h2>
+
+<p>This is such a shameless self-plug that it should be very clear I’m not ashamed of anything. Go forth and tell the world, Jan Lehnardt is a shameless person!
+
+<p>Also, mustaches. Who here has heard about mustache (<em>raises hand</em>)? — A good number, cool!
+
+<p>For those who haven’t heard of mustache: shame on you! — err, no really, it’s just a small template library, initially written in Ruby, I did the JavaScript port, but many different language implementations exist, including a Python one, you should check it out.
+
+<p>Mustache came into existence last year when the <a href="http://chriswanstrath.com/">Chris Wanstrath</a> / <a href="http://github.com/defunkt">defunkt</a>, one of the founders of <a href="https://github.com/">GitHub</a> got inspired by <a href="http://code.google.com/p/google-ctemplate/">CTemplate</a>, a C++ (yuck!) template engine. His language is Ruby so he started writing a port. In the process he discovered that by <em>leaving out features</em>, he could make <em>a better template engine</em>.
+
+<p>When I saw the Ruby code (which I can barely read) I saw it was <a href="http://github.com/defunkt/mustache/blob/v0.1.0/lib/mustache.rb">just a couple of pages</a>, not more than five or six and I thought, damn this would be useful with the <a href="http://github.com/couchapp/couchapp/">CouchDB stuff</a> I’m doing in JavaScript. It was simple, minimal, well designed and most importantly very little code that I could take and make <a href="http://github.com/janl/mustache.js/blob/0.1/mustache.js">a 1:1 translation</a> of it into JavaScript. It inherited all the good attributes of mustache.rb. Mustache.js was born. I didn’t go about to leave out more features to make it even better. I thought it was perfect enough already.
+
+<p>Today mustache.js is used on twitter.com which I’m extremely proud of. One of the reasons, because of the peculiarities of the browser environment (you all know this), the number of lines of JavaScript matter. The more code, the longer it takes to download your site and the longer it takes to compile and execute your code. I strongly believe that the twitter engineers wouldn’t have picked mustache.js if it were a straight port of CTemplate with thousands of lines of code and a ton of features.
+
+<p>To sum up: mustache.rb was small and clear enough for me as Ruby-newbie to port it to my language. It was also small enough to warrant using on a high-profile, high-traffic website. Simplicity FTW.
+
+<p>Also, mustaches.
+
+
+<h2>Algorithms</h2>
+
+<p>Watch out, bad pun ahead (not a single person even smiled, I win :)
+
+<p>The mustache tale ties into the rest of this pretty well. A template engine is pretty simple, I’ll get back to that later, but bear with me. Conceptually mustache was simple enough that I could grok all its algorithms in a very short amount of time.
+
+<p>Mustache.rb has since been rewritten at least twice to add a “proper” parser, less lazy regex matching and a ton of other internal features that the Ruby folks needed.
+
+<p><a href="http://github.com/raycmorgan/Mu">Ray C Morgan of Zappos ported mustache to Node.js</a> to make it work better in evented programming.
+
+<p>The result of both the Ruby and the <a href="http://nodejs.org/">Node.js</a> version is more code. Really smart CS geeks who live and breathe parsers optimized the hell out of mustche.rb. I wouldn’t have a clue where to even begin understanding this. I’m not that smart.
+
+<p>If I backported the Node.js version, twitter would likely reconsider using mustache as it has a ridiculous amount of code. Something that doesn’t matter in server-land, but that’s not all I want to support (trade-offs y’all).
+
+<p>More code can lead to less computational complexity, but the general rule of thumb here is that the simplest version is also the one that’s fastest.
+
+<p>Mustache again: I recently removed a method that slowly copied objects that I had to write because JavaScript lacks a particular object-manipulation primitive the Ruby version was using. It bugged the hell out of me until I found a way to get rid of it by shuffling a few lines someplace else. Lesson: The fastest code is the one you don’t write.
+
+
+<h2>Architecture</h2>
+
+<p>The bigger picture of how all your components fit together and interact. Java heads add abstraction over abstraction (I’m exaggerating, I like bashing Java developers) to solve their problems (AbstractGeneratorFactoryFactory anyone?). There’s nothing wrong with this as long as you don’t care for less code.
+
+<p><a href="http://en.wikipedia.org/wiki/SOAP">SOAP</a> is for hiding remote procedure calls in HTTP and XML. <a href="http://en.wikipedia.org/wiki/BOSH">BOSH</a> is HTTP over, hold it: HTTP. REST on the other hand is just an interpretation of HTTP, something that tells you to not do BOSH or SOAP. I’ll get back to this.
+
+<p>I hear the recent talks about baking NoSQL support into Django <a href="http://twitter.com/simonw/status/14614406431">spurred the idea of adding another layer</a> that abstracts all data operations on top of different DB-type abstraction layers. You see layers, and I think you get this, as the proposal was shot down quickly (Hi <a href="http://twitter.com/simonw">@simonw</a> :)
+
+<p>CouchDB, my flavour of NoSQL comes with an app-server built in, it completely removes the need for a middle-tier. HTML apps are served out of CouchDB right into the browser and it is a good thing. More people are able to understand this. Installations are easier, there is less friction.
+
+<p>Node.js brings evented JavaScript to the server. Developers are intrigued by getting rid of the different languages.
+
+<hr>
+
+<p>I didn’t get to mention the next point, but I planned for it and I’d like to keep it in the write up:
+
+
+<h3>Crash-Only Design</h3>
+
+<p>Research has shown that it is faster and more reliable to let a piece of software crash and repair on startup than to try and gracefully shut down. Even down to the Operating System.
+
+<p><a href="http://damienkatz.net/2004/08/crash-only-software.html">Crash-only</a> or fail-fast design is a core concept in Erlang programming, where systems are supposed to be extremely fault tolerant. Instead of trying to deal with shutdown in every conceivable way, components are simply terminated and restarted.
+
+<p><a href="http://damienkatz.net/2004/09/crash-only-software-revisited.html">This results</a> in less code and faster, more robust and easier to understand software. It is great!
+
+<hr>
+
+
+<h2>Data</h2>
+
+<p>I’ll skimp on this one by just raising “NoSQL”. Really, don’t use an RDBMS where you want to write useless code. Sure, your ORM is great, but my database has less than half the lines of code (actually than Rail’s). Good luck competing with that (cheating a little, of course :).
+
+
+<h2>UI</h2>
+
+<p>This is also one I’ll gloss over because most of you — I assume — are more coder than UI people. Still, less UI puts emphasis on content, makes it easier for the user to find or use stuff (see next point).
+
+
+<h2>UX</h2>
+
+<p>Tightly knit into the previous point. Users who can’t find shit (looking at your airline sites and Google webmaster tools!) are less likely to be happy users (cf. end-developers).
+
+<p>User experience is also having method-call parameters that are confusing, or illogical return types. You need to sweat over every detail of your API or UI to make it well-designed.
+
+<p>Most importantly, if your user experience sucks, nobody is gonna use your shit unless they have to and then they are not happy (looking at you, Lotus Notes). Users don’t care if you have the cutest architecture, the bestest CSS and the hottest NoSQL database in town. They only want to get their job done, if you throw stones in their way, nothing else will save you.
+
+
+<h2>?</h2>
+
+<p>The what now? So yeah, make everything nice and simple and you’ll rule the world. Or something. Go, rewrite all the stuff you’ve written in the past, reconsider solutions to problems you thought you tackled. Throw away bloatware, don’t use SQL, ORMs are evil and get rid of as many abstractions you can.
+
+<p>Perfect is the enemy of done.
+
+<p>Right.
+
+<p>So.
+
+
+<h2>Simple Things</h2>
+
+<p>Alan Kay is a great guy. If you don’t agree with what he says, you need to reconsider your career in software. He invented <a href="http://en.wikipedia.org/wiki/Smalltalk">Smalltalk</a> to be able to give children the ability to build their equivalent of Photoshop in a page or two of code. He invented object-orientation on the way and the Personal computer, Laptop and iPad along the way (For reals!).
+
+<p>But sometimes you’ve got to write a lot of code. Abstracting away the machine to let kids code Smalltalk must be complex. In the same vein, Calendars are hard, package managers are hard. Lots of code needs to be written to solve these things (or are unsolvable, my bet for calendars).
+
+<p>I bashed BOSH and SOAP earlier. They exist for a reason. Sure, ideally everything could be simpler over HTTP. If only your <a href="http://en.wikipedia.org/wiki/Series_40">S40</a> (or worse)-based phone came with a decent HTTP client. There is one, but it only does GET. Or only allows request bodies with POST request, or doesn’t do any other of the many cool things in <a href="http://www.ietf.org/rfc/rfc2616.txt">RFC 2616</a>. BOSH makes it all work for them so people can get their stuff done.
+  
+<p>Other library code you rely on might be solid, no stability issues with the ORM, being able to treat image manipulation as a black box? Great, why worry about the code that somebody else has written. Standing on the shoulders of giants we built the best things. Except, I never want to get into legacy mobile Java development.
+
+<p>So my plea for you is: Make a simpler future. It’ll work better, you will significantly make the world a happier place, if not for you, think of your beloved keynote presenter.
+
+<p>Thank you!
+
+<hr>
+
+<h2>Questions</h2>
+
+<p>Alex Gaynor asked about where to find inspiration for simplicity, how can this be learned?
+
+<p>I suggested to look at history, at great minds, past solutions. Basically the same answer for the question about how to learn good coding: look at a lot of good code.
+
+<p>❧
