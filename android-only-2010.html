@@ -1,0 +1,271 @@
+<title>Apache CouchDB: Open Source Mobile Sync that Just Works</title>
+
+<meta charset="utf-8">
+<link rel="stylesheet" href="de.css">
+
+<p>I gave a 40-minute talk titled “Apache CouchDB: Open Source Mobile Sync
+that Just Works” talk at <a
+href="http://swdc-central.com/androidonly/index.html">Android Only</a>,
+Stockholm, September 30th, 2010. This is how it roughly went.
+
+<p>See my <a href="#present">Slides</a>. Video is pending.
+
+<h2>Jan Lehnardt, <a href="http://twitter.com/janl">@janl</a>, jan@apache.org</h2>
+
+<p>Hi! My name is Jan Lehnardt, I’m an open source developer. I live in Berlin
+and I work on <a href="http://couchdb.apache.org/">Apache CouchDB</a>. Thanks
+for letting me speak at your nice conference; thanks to <a href="http://twitter.com/psvensson">Peter</a> for inviting me. I take any excuse to visit Stockholm, this is a lovely city.
+
+<h1>Context</h1>
+
+<p>I’d also like to thank Brian &amp; Ólafur for their talks yesterday
+(although I didn’t technically attend Brian’s, sorry Brian :). They did a
+great job setting the stage for me, even thought they may not have been aware
+of it. They talked about HTML applications as an alternative to native apps
+and a true P2P way of sharing data. Apache CouchDB fits right into this space
+and I am glad I don’t have to introduce these concepts myself. Cheers to Brian
+&amp; Ólafur!
+
+<p>I’d also like to extend my forward-thanking to Joe &amp; David who are
+going to talk this afternoon about pretty much the things I’m going to talk
+about, except, I like to think about it as me setting up all the theory and
+they are showing how things actually work in practice (I hear there are
+demos). So it should be a good combination.
+
+<p>Enough with the prelude. My talk has three sections:
+
+<h2>Use Cases</h2>
+
+<p>Where I’ll be talking about current and future real-live scenarios where
+  CouchDB is good solution to problems people have.
+
+<h2>The Physics of Local Data</h2>
+
+<p>Here I’ll take a step back and look at what it means to have a syncing
+database on every phone; what problems there are, how to solve them and how
+far we are solving them.
+
+<h2>CouchDB Technology Details</h2>
+
+<p>Finally, I’ll give a brief overview of how CouchDB fits into the picture of
+  this conference and the Android landscape at large.
+
+<p>Let’s start with the use cases.
+
+<h1>Use Cases</h1>
+
+<h2>Exponential Bandwidth Explosion</h2>
+
+<p>Taking up Ólafur’s point from yesterday (tip hat). I’m sure you know all
+this, but mobile devices are starting to outsell laptop computers which
+outsell regular computers already and they are growing fast.
+
+<p>centralised telecommunication infrastructure has a hard time keeping up.
+Switching from 3G to 4G may yield a capacity increase up to three orders of
+magnitudes, but that’s not a long term strategy against exponentially growing
+demand.
+
+<p>A bit futuristic, but think ahead, say 300 years, when Humanity starts to
+branch out to other planets. We simply can’t build bigger cell towers to power
+mobile phone networks (which are likely just data networks then) on Mars.
+
+<p>Short and long term, the future of networking is distributed. And there is no way around it.
+
+<p>Yes, nobody likes giving up control, but to spur true advancement, we need
+to take the networks back from the telco companies.
+
+
+<h2>Plane</h2>
+
+<p>Sometimes we’re just offline by the nature of things. We see wifi on planes
+start to pop up and if you ever used it you know how crazy cool it is to sit
+in a chair in the sky and push your commits to Github and talk to your
+colleagues on IRC about it.
+
+<p>Most planes though, don’t have Wifi and won’t for some time.
+
+
+<h2>Focus (deliberate offline)</h2>
+
+<p>“Hey” you say, “I love being on a plane, I can concentrate, because I don’t
+get distracted by Twitter all the time”. Good point! Many people choose
+distraction-free environments deliberately to focus on a given task. If their
+app requires a working internet connection that promise is broken.
+
+
+<h2>No Bars</h2>
+
+<p>Network connectivity is becoming ubiquitous, we’ve been hearing this for a
+decade now, yet when I leave Berlin by train, just 500m outside of the city
+limits, I have “No Service”. From the press you may have heard that certain
+providers in the US have very spotty coverage, too. They even advertise with
+“least dropped calls in the country” to which I ask what a “dropped call” is. The point is, Europe is doing pretty fine compared to other places, but we still have plenty of blank spots on the map.
+
+<h2>Security</h2>
+
+<p>Occasionally, you are in an environment, say a company that is very
+secretive (I visited a certain fruit company), there is no way to get online
+there. If you are relying on data in your CRM and don’t have a local copy,
+you’re fucked.
+
+
+<h2>Power</h2>
+
+<p>Being online means using the radio transmitter in your mobile device or
+laptop. Next to the screen, they are the biggest power-hogs. When I get the
+“20% notice” and I need my phone to work, I disable everything that eats
+battery, dim the screen and hope I find power soon enough. If then I need to
+access data that is stored in the cloud or somewhere else, well, tough luck.
+
+
+<h2>Data Fucking Roaming</h2>
+
+<p>It’s not really a technology fault, but the telco’s are doing a good job
+milking users when abroad. The EU is putting in limits and I think I am paying
+0.19€ per 100KB data. Just under 2€ per MegaByte. In other places it is more
+ridiculous and practically unusable. It is a business technique to cash in on
+users who accidentally use data services abroad. Those who do so wilfully find
+other ways to get online. Sometimes though it is just not that easy and you
+will find yourself offline with important data like your hotel’s address
+unreachable.
+
+<h1><hr></h1>
+
+
+<h1>The Physics of Local Data</h1>
+
+<p>By now you should get the idea that there is a use-case for local data.
+Let’s now explore the physics of local data and why it is good for users.
+
+<h1><em>“You can’t add machines to a network to reduce its latency.”</em> — @jchris’
+Law</h1>
+
+<p>J Chris Anderson, fellow CouchDB developer posed this law while discussing
+the latency of CouchDB based applications. Following this law, the app that’s
+fastest for the user is the one with all data locally available. Let’s keep
+that in mind for later.
+
+<h1>Local Data is King</h1>
+
+<p>Local data has other fine attributes. Immediate response to user actions is
+a big one, if data doesn’t have to travel over a network, responses can be
+instant, even on mobile devices. In the User Experience world, this is one of
+the core principles of good UI design. Low latency data access leads to
+snappier user interface interactions leads to happier users (ultimately makes
+the world a better place or you a richer person).
+
+<p>Second, if data doesn’t have to travel over a network, it avoids activating
+the radio transmitter and thus preserves battery life. In turn, making for
+happier users.
+
+<p>Third, if data distribution can be decoupled from data interaction, the
+distribution can be optimized for throughput, not latency. Making sure every
+little request is fast is hard to guarantee on the client or busy server-side.
+If small delays in data transfer don’t matter, data can be delivered much more
+economically.
+
+<p>The caveat here, as Ólgafur described yesterday, not all applications allow
+for that pattern, real time audio and video e.g. But most everything else can
+live with higher-latency data transfer times if the data-interaction is
+decoupled.
+
+<h1>Distributed Networking</h1>
+
+<p>By allowing for first-class local data, we are practically building a
+distributed network architecture. Compared to a centralised one, it comes with
+its own pros and cons lists.
+
+<h2>Control</h2>
+
+<p>The central part in a centralised architecture is, obviously, a core
+feature, it allows for a single control point to, well, control any aspect of
+that architecture.
+
+<p>In the decentralised world it is a feature to <em>not</em> have a central
+piece. It allows for more fault tolerant and higher-capacity systems. It also
+allows sharing of data unbeknownst to others (see BitTorrent).
+
+<h2>Discovery</h2>
+
+<p>Discovering peers in a centralised system is easy: everyone who connects to
+the central service is registered as a peer.
+
+<p>Decentralised systems require a smarter way of peer discovery. The web has
+search engines, catalogues, social and activity-based recommendation. There's
+plenty of other ways of discovery for other use-cases. Bottom line though is,
+they are more complicated.
+
+
+<h2>Trust</h2>
+
+<p>If I give you a letter, you know that letter is from me. If I give you a
+letter from Pete, you still know that that letter is from me, but you can’t
+know that letter is from Pete unless the letter proves unfakeable that letter
+is actually from Pete <em>or</em> you trust me.
+
+<p>In a centralised system trust is easily established as clients can be told
+to authenticate with the central service. Trust in a decentralised system,
+like discovery, is possible (see GPG), but more complicated again.
+
+<h2>Fun</h2>
+
+<p>The anti-authoritarian nature of decentralised systems makes them more fun
+for certain kinds of people. It’s a hacker’s nature to prefer a system where
+they don’t have to ask for permission to do something.
+
+<h1><hr></h1>
+
+<h1>CouchDB Technology Details</h1>
+
+<p>Why should you care about any of this? Apache CouchDB allows you to build
+decentralised, P2P systems that inherit a super simple API for building
+portable web applications.
+
+<p>It gives you a framework to build applications that overcome the issues I
+talked about the beginning. It allows you to build applications with data
+local to any device, laptop, mobile, server; getting the most out of the data
+for the user, regardless of where he or she needs it.
+
+<p>It’s really awesome, here’s how:
+
+<h1>Open Source (Apache 2 License)</h1>
+
+<h1>Open Standards</h1>
+
+<h1>HTTP</h1>
+
+The world speaks HTTP and so does CouchDB. HTTP is everywhere, in clients and
+servers and proxies and caches and programming languages and everywhere else
+too. It is well supported, understood and plenty scalable.
+
+<h1>JSON</h1>
+<h1>Views</h1>
+<h1>HTML</h1>
+<h1>Sync</h1>
+
+<h1>CouchApps</h1>
+
+<h1><hr></h1>
+
+<h2><img src="img/the-book.png"></h2>
+
+<h2><a href="http://guide.couchdb.org/">http://guide.couchdb.org/</a></h2>
+
+<h2>Thanks!</h2>
+
+<h2>&nbsp;</h2>
+
+
+
+
+
+<script src="present.js/present.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- 
+The key factor for data on mobile devices is sync. Be it between mobile devices, through a local hub or with large infrastructures in the cloud, reliable sync lets data travel with the user, enabling low-latency access and offline availability for his or her data.
+
+For integrated user experiences of the future reliable mobile sync is a much needed foundation, yet not many lean solutions exist. Apache CouchDB is an open source database that has been built from the ground up to support reliable sync. CouchDB is robust enough to be connected to large clusters on cloud infrastructures, but it is small enough to run on a mobile device. And it can connect both worlds with an industry-strength synchronisation protocol over plain old HTTP(S).
+
+CouchDB takes open and web standards seriously and is meticulously built around HTTP, JSON, HTML(5) and JavaScript. It allows developers to build dynamic web applications with the technologies they already know.
+
+In this talk, you'll learn the about physics of local data and why it is important for your success in the future and how Apache CouchDB can be a good technological foundation for your projects. -->
